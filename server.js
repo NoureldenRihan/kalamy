@@ -11,11 +11,6 @@ app.use(bodyParser.json());
 const s =
   "mongodb://dad:00dad00@ac-dwfstm1-shard-00-00.v2m9wr2.mongodb.net:27017,ac-dwfstm1-shard-00-01.v2m9wr2.mongodb.net:27017,ac-dwfstm1-shard-00-02.v2m9wr2.mongodb.net:27017/data?ssl=true&replicaSet=atlas-qg6kg7-shard-0&authSource=admin&retryWrites=true&w=majority&appName=mrdb";
 
-mongoose
-  .connect(s)
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("❌ MongoDB connection failed:", err));
-
 // ---- SCHEMA ----
 const textSchema = new mongoose.Schema({
   content: String,
@@ -50,5 +45,18 @@ app.get("/api/text", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch messages." });
   }
 });
+
+// Start server
+mongoose
+  .connect(s)
+  .then(() => {
+    // Start the server
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => console.log(err));
+
+module.exports = app;
 
 module.exports = app;
