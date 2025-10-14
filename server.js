@@ -42,7 +42,7 @@ app.get("/api/text", async (req, res) => {
     const messages = await TextModel.find().sort({ createdAt: -1 });
     res.json(messages);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch messages." });
+    res.status(500).json({ message: error.message }); // something went wrong
   }
 });
 
