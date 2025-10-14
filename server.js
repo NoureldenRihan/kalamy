@@ -46,6 +46,10 @@ app.get("/api/text", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running!");
+});
+
 // Start server
 mongoose
   .connect(s)
@@ -56,7 +60,5 @@ mongoose
     });
   })
   .catch((err) => console.log(err));
-
-module.exports = app;
 
 module.exports = app;
