@@ -13,7 +13,11 @@ const s =
 
 // ---- SCHEMA ----
 const textSchema = new mongoose.Schema({
-  content: String,
+  name: String,
+  address: String,
+  region: String,
+  mobile: String,
+  speciality: String,
   createdAt: { type: Date, default: Date.now },
 });
 
@@ -22,15 +26,16 @@ const TextModel = mongoose.model("Text", textSchema);
 // ---- ROUTES ----
 app.post("/api/text", async (req, res) => {
   try {
-    const { content } = req.body;
-
-    // Example processing
-    const processed = content.trim().toLowerCase();
-
-    const newText = new TextModel({ content: processed });
-    await newText.save();
-
-    res.json({ message: "Saved successfully!", data: processed });
+    const { name, address, region, mobile, speciality } = req.body;
+    const newEntry = new TextModel({
+      name,
+      address,
+      region,
+      mobile,
+      speciality,
+    });
+    await newEntry.save();
+    res.json({ message: "Saved successfully!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong." });
@@ -55,8 +60,8 @@ mongoose
   .connect(s)
   .then(() => {
     // Start the server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    app.listen(5000, () => {
+      console.log(`Server is running on port ${5000}`);
     });
   })
   .catch((err) => console.log(err));
