@@ -61,4 +61,9 @@ mongoose
   })
   .catch((err) => console.log(err));
 
+app.use((err, req, res, next) => {
+  console.error("🔥 Server error:", err);
+  res.status(500).json({ message: "Server crashed", error: err.message });
+});
+
 module.exports = app;
